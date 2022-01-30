@@ -1,0 +1,13 @@
+##############################
+# OpenLoop Saving Automation #
+##############################
+
+period = database["properties"]["autosave"]["save"]
+
+io.settings["name"] = "OpenLoop Saving System"
+io.settings["description"] = f"Automatically saves database to json every {period} seconds"
+
+def save():
+    size = database.save()
+
+io.worker(save, period)
