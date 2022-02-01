@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify, request
+from werkzeug.security import generate_password_hash
+import requests
 import os
 
 class API_Handler:
@@ -19,7 +21,17 @@ class API_Handler:
                 return {"completed": False, "reason": "No Password Headers"}
             else:
                 password = request.headers.get("password")
-                db["properties"]["users"]["admin"] = password
+                db["properties"]["users"]["admin"] = generate_password_hash(password)
+                return {"completed": True}
+
+        @self.api.route("/setpass/<user>")
+        @auth.login_required
+        def set_password_specific(user : str):
+            if request.headers.get("password", False)==False:
+                return {"completed": False, "reason": "No Password Headers"}
+            else:
+                password = request.headers.get("password")
+                db["properties"]["users"][user] = generate_password_hash(password)
                 return {"completed": True}
 
         @self.api.route("/drivers")
@@ -28,7 +40,7 @@ class API_Handler:
             prod = []
             for i in workers.plugin_inst:
                 prod.append(i.name)
-            return prod
+            return jsonify(prod)
 
         @self.api.route("/drivers/delete/<driver>")
         @auth.login_required
@@ -37,28 +49,26 @@ class API_Handler:
 
             for i in workers.plugin_inst:
                 if i.name == driver:
-                    chosen = driver
-            
-            if chosen.name == "OpenLoop Saver":
-                return {"completed": False, "reason": "You cannot delete a internal Plugin"}
-            elif not chosen:
+                    chosen = i
+
+            if chosen == False:
                 return {"completed": False, "reason": "That Plugin does not exist"}
+            elif chosen.name == "OpenLoop Saver":
+                return {"completed": False, "reason": "You cannot delete a internal Plugin"}
             else:
                 os.remove(f"plugin/{chosen.name}.pyl")
                 return {"completed": True}
 
-        @self.api.route("/driver/upload")
+        @self.api.route("/drivers/upload/<name>", methods=["POST"])
         @auth.login_required
-        def upload_driver():
-            file = request.headers.get("file", None)
-            name = request.headers.get("name", None).split("/")
-            name = name[len(name)-1]
-            if file == None or name == None:
-                return {"completed": False, "reason": "Missing Headers"}
-            elif name.split(".")[len(name.split("."))-1] != ".pyl":
-                return {"completed": False, "reason": "Invalid Filename. All plugins should use .pyl"}
-            else:
-                with open(f"plugins/{name}", "w") as f:
-                    f.write(file)
+        def upload_driver(name):
+            url = request.headers.get("url", None)
+            data = requests.get(url)
+            if url==None:
+                return {"completed": False, "reason": "Url not found in headers"}
+            if data.ok:
+                with open(f"plugins/{name}.pyl", "w") as f:
+                    f.write(data.text)
                 return {"completed": True}
-                
+            else:
+                return {"completed": False, "reason": "Url not accesable"}
