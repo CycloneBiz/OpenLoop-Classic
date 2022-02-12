@@ -2,6 +2,7 @@ import threading, time
 from datetime import datetime
 
 from openloop.store import backup, restore
+from openloop.alerts import Alert
 
 class Database(dict):
     size = 0
@@ -19,7 +20,7 @@ class IOT:
     settings = {
         "icon": "fas fa-plug"
     }
-    def __init__(self, name, superbase, database = {}, data = None) -> None:
+    def __init__(self, name, superbase, database = {}, data = None, alerts = []) -> None:
         self.name = name
         self.database = database
         if data == None:
@@ -28,7 +29,7 @@ class IOT:
         else:
             script = data
         
-        exec(script, {"io": self, "database": superbase}, {})
+        exec(script, {"io": self, "database": superbase, "AlertManager": alerts, "Alert": Alert}, {})
     
     def publish(self, subbase, object):
         if not subbase in self.database:

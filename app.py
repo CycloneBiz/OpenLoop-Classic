@@ -10,13 +10,18 @@ auth = HTTPBasicAuth()
 db = Database()
 db.restore()
 
+# Auth Handler
 from openloop.auth import Auth_Handler
 auth_handle = Auth_Handler(db, auth)
+
+# Alert System
+from openloop.alerts import AlertManager
+alerts = AlertManager()
 
 # Enable Plugins and Workers
 from openloop.workers import WorkerHandler
 print(" * Turning on Plugin Support... ")
-worker_handle = WorkerHandler(db)
+worker_handle = WorkerHandler(db, alerts)
 
 # Setup Save Handler
 from openloop.saver import WorkSaveHandler

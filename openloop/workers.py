@@ -2,7 +2,7 @@ import os
 from openloop.virtualizer import IOT
 
 class WorkerHandler:
-    def __init__(self, db) -> None:
+    def __init__(self, db, alerts) -> None:
         print("Scanning...")
         plugins = os.listdir("plugins")
 
@@ -22,5 +22,5 @@ class WorkerHandler:
             print(f"Starting {name} daemon(s)...")
             with open(f"plugins/{i}") as f:
                 past_data = db["plugin_data"].get(name, {})
-                self.plugin_inst.append(IOT(name, db, past_data, f.read()))
+                self.plugin_inst.append(IOT(name, db, past_data, f.read(), alerts))
             
