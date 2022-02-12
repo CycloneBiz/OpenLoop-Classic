@@ -7,6 +7,7 @@ class Database(dict):
     size = 0
     def save(self):
         self.size = backup(self)
+        return self.size
 
     def restore(self):
         self.update(restore())
@@ -49,7 +50,7 @@ class IOT:
     def extract_features(self):
         prod = {}
         for i in self.feature:
-            prod[i] = self.database.get(i, [])
+            prod[i] = self.database.get(self.feature[i], [])
         return prod
 
     def generate_origin(self):
