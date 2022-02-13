@@ -5,7 +5,7 @@ from openloop.chart import translate as chart_translate
 class Web_Handler:
     web = Blueprint("web", __name__, "static", "templates")
 
-    def __init__(self, db, workers, auth) -> None:
+    def __init__(self, db, workers, auth, alerts) -> None:
         self.db = db
 
         def get_navs(highlight):

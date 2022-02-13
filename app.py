@@ -30,7 +30,7 @@ save_handler = WorkSaveHandler(worker_handle, db["properties"]["autosave"]["work
 
 # Import Web Interface System
 from openloop.web import Web_Handler
-web_handler = Web_Handler(db, worker_handle, auth)
+web_handler = Web_Handler(db, worker_handle, auth, alerts)
 app.register_blueprint(web_handler.web, url_prefix="/")
 print(" * Website System Imported...")
 
