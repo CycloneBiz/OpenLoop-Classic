@@ -36,7 +36,7 @@ print(" * Website System Imported...")
 
 # Import API and share database
 from openloop.api import API_Handler
-api_handler = API_Handler(db, worker_handle, auth)
+api_handler = API_Handler(db, worker_handle, auth, alerts)
 app.register_blueprint(api_handler.api, url_prefix="/api")
 print(" * API Imported...")
 

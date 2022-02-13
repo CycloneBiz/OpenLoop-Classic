@@ -6,7 +6,7 @@ import os
 class API_Handler:
     api = Blueprint("api", __name__, "static", "templates")
 
-    def __init__(self, db, workers, auth) -> None:
+    def __init__(self, db, workers, auth, alerts) -> None:
         self.db = db
 
         @self.api.route("/")
@@ -72,3 +72,9 @@ class API_Handler:
                 return {"completed": True}
             else:
                 return {"completed": False, "reason": "Url not accesable"}
+        
+        @self.api.route("/clear_notifications")
+        @auth.login_required
+        def notifications():
+            alerts.reset()
+            return {"completed": True}

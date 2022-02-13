@@ -34,13 +34,14 @@ class Web_Handler:
                 navbar=get_navs("Dashboard"),
                 drivers=len(workers.plugin_inst),
                 energy="NaN",
-                storage_used=f"{db.size/store_settings['divide']}{store_settings['unit']}"
+                storage_used=f"{db.size/store_settings['divide']}{store_settings['unit']}",
+                alerts=alerts
             )
 
         @self.web.route("/settings")
         @auth.login_required
         def settings_view():
-            return render_template("settings.html", navbar=get_navs("Settings"), version=Version(), system=System())
+            return render_template("settings.html", navbar=get_navs("Settings"), version=Version(), system=System(), alerts=alerts)
 
         @self.web.route("/driver/<driver>")
         @auth.login_required
@@ -50,6 +51,6 @@ class Web_Handler:
                 if i.name == driver:
                     found = i
             if found != False:
-                return render_template("sensor.html", navbar=get_navs(driver), settings=i.settings, name=i.name, chart=chart_translate(i.extract_features()))
+                return render_template("sensor.html", navbar=get_navs(driver), settings=i.settings, name=i.name, chart=chart_translate(i.extract_features()), alerts=alerts)
             else:
-                return render_template("404.html", navbar=get_navs(""))
+                return render_template("404.html", navbar=get_navs(""), alerts=alerts)
