@@ -6,7 +6,6 @@ def magical_color():
     return f"rgb({color[0]}, {color[1]}, {color[2]})"
 
 def translate(data):
-    print(data)
     datasets = []
     for i in data:
         if i != "origin":
