@@ -16,11 +16,11 @@ class Database(dict):
 class IOT:
     threads = []
     running = True
-    feature = {}
-    settings = {
-        "icon": "fas fa-plug"
-    }
     def __init__(self, name, superbase, database = {}, data = None, alerts = []) -> None:
+        self.feature = {}
+        self.settings = {
+            "icon": "fas fa-plug"
+        }
         self.name = name
         self.database = database
         if data == None:

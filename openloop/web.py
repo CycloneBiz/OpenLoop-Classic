@@ -51,6 +51,6 @@ class Web_Handler:
                 if i.name == driver:
                     found = i
             if found != False:
-                return render_template("sensor.html", navbar=get_navs(driver), settings=i.settings, name=i.name, chart=chart_translate(i.extract_features()), alerts=alerts)
+                return render_template("sensor.html", navbar=get_navs(driver), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts)
             else:
-                return render_template("404.html", navbar=get_navs(""), alerts=alerts)
+                return render_template("404.html", navbar=get_navs(""), alerts=alerts), 404
