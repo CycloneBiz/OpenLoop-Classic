@@ -17,7 +17,7 @@ def save():
     #io.generate_origin()
 
 # Examples
-AlertManager.append(Alert("fas fa-check", "OpenLoop Saver", "OpenLoop is online!", "success"))
-#AlertManager.append(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", "Something bad happend!", "warning"))
+AlertManager.submit(Alert("fas fa-check", "OpenLoop Saver", "OpenLoop is online!", "success"))
+#AlertManager.submit(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", "Something bad happend!", "warning"))
 
 io.worker(save, period)

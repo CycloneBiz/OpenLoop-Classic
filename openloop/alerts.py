@@ -20,5 +20,8 @@ class AlertManager(list):
     def reset(self):
         super().__init__() # Reinitializes the list object
 
+    def submit(self, object):
+        self.insert(0, object)
+
     def length(self):
         return len(self)
