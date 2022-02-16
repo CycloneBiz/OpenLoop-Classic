@@ -1,0 +1,20 @@
+import speedtest
+
+global st
+st = speedtest.Speedtest()
+
+io.settings["name"] = "Ookla Speedtest"
+io.settings["description"] = "Requires the Speedtest CLI in PyPi"
+io.settings["feature"] = True
+
+io.feature["Upload Speed"] = "up"
+io.feature["Download Speed"] = "down"
+
+def check_speed():
+    upload = st.upload()
+    down = st.download()
+    io.publish("up", upload)
+    io.publish("down", down)
+    io.generate_origin()
+
+io.worker(check_speed, 30000)

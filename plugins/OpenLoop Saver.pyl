@@ -5,7 +5,7 @@
 period = database["properties"]["autosave"]["save"]
 
 io.settings["name"] = "OpenLoop Saving System"
-io.settings["description"] = f"Automatically saves database to json every {period} seconds"
+io.settings["description"] = f"Automatically saves database to json every {period} mileseconds"
 
 # Commented out code is for a chart for file sizes, use this as a example as this code natrually makes the database bigger by allot
 #io.settings["feature"] = True
@@ -17,7 +17,7 @@ def save():
     #io.generate_origin()
 
 # Examples
-AlertManager.append(Alert("fas fa-check", "OpenLoop Saver", "We are online!", "success"))
-#AlertManager.append(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", "Something bad happend!", "warning"))
+AlertManager.submit(Alert("fas fa-check", "OpenLoop Saver", "OpenLoop is online!", "success"))
+#AlertManager.submit(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", "Something bad happend!", "warning"))
 
 io.worker(save, period)
