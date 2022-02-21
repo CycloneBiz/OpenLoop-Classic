@@ -1,4 +1,4 @@
-from openloop import app
+from app import app
 
 # Run this is gunicorn for production
 
