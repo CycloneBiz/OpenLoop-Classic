@@ -6,6 +6,7 @@ period = database["properties"]["autosave"]["save"]
 
 io.settings["name"] = "OpenLoop Saving System"
 io.settings["description"] = f"Automatically saves database to json every {period} mileseconds"
+io.settings["icon"] = "fas fa-save"
 
 # Commented out code is for a chart for file sizes, use this as a example as this code natrually makes the database bigger by allot
 #io.settings["feature"] = True

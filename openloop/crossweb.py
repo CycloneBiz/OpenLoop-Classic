@@ -1,5 +1,5 @@
 class Button:
-    def __init__(self, name, color = "secondary", icon="fa-infinity"):
+    def __init__(self, name, color = "secondary", icon="fas fa-infinity"):
         self.onclick = None
         self.name = name
         self.color = color
@@ -10,9 +10,9 @@ class Button:
 class ButtonList(list):
     def __init__(self):
         super().__init__()
-        self.append(Button("Calibrate", icon="fa-redo"))
-        self.append(Button("Restart", icon="fa-exclamation-triangle"))
-        self.append(Button("Purge", icon="fa-trash"))
+        self.append(Button("Calibrate", icon="fas fa-redo"))
+        self.append(Button("Restart", icon="fas fa-exclamation-triangle"))
+        self.append(Button("Purge", icon="fas fa-trash"))
 
 class CrossWeb:
     def __init__(self) -> None:
