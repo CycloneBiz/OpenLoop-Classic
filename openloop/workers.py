@@ -1,5 +1,6 @@
 import os
 from openloop.virtualizer import IOT
+from openloop.alerts import Alert
 
 class WorkerHandler:
     def __init__(self, db, alerts) -> None:
@@ -18,9 +19,10 @@ class WorkerHandler:
         for i in plugins:
             name = i.split('.')[0]
             if name in names:
-                print("Theres more than one file with the same initial name!")
-            print(f"Starting {name} daemon(s)...")
+                alerts.submit(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", f"The plugin {name} has a duplicate! This will cause major issues to the OpenLoop plugin system.", "danger"))
+            names.append(name)
             with open(f"plugins/{i}") as f:
                 past_data = db["plugin_data"].get(name, {})
                 self.plugin_inst.append(IOT(name, db, past_data, f.read(), alerts))
+        print("Completed Plugins...")
             
