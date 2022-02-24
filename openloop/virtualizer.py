@@ -3,6 +3,7 @@ from datetime import datetime
 
 from openloop.store import backup, restore
 from openloop.alerts import Alert
+from openloop.crossweb import CrossWeb
 
 class Database(dict):
     size = 0
@@ -17,6 +18,7 @@ class IOT:
     threads = []
     running = True
     def __init__(self, name, superbase, database = {}, data = None, alerts = []) -> None:
+        self.crossweb = CrossWeb()
         self.feature = {}
         self.settings = {
             "icon": "fas fa-plug"
@@ -29,7 +31,7 @@ class IOT:
         else:
             script = data
         
-        exec(script, {"io": self, "database": superbase, "AlertManager": alerts, "Alert": Alert}, {})
+        exec(script, {"io": self, "database": superbase, "AlertManager": alerts, "Alert": Alert, "crossweb": self.crossweb}, {})
     
     def publish(self, subbase, object):
         if not subbase in self.database:
@@ -45,7 +47,6 @@ class IOT:
     def worker(self, func, ms):
         thread = threading.Thread(target=self.runtime, args=[func, ms])
         thread.start()
-        print(f"Started thread for function {func}")
         self.threads.append(thread)
 
     def extract_features(self):

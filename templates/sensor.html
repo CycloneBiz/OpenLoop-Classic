@@ -42,6 +42,13 @@
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="nav-item no-arrow">
+                                    <a class="dropdown-toggle nav-link" href="#" id="reload"> 
+                                        <i class="fas fa-redo-alt fa-fw"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow">
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
                                         {% if alerts.length() > 0 %}
@@ -76,34 +83,15 @@
                 </nav>
                 <div class="container-fluid">
                     <h3 class="text-dark mb-1" style="padding: 0;padding-bottom: 10px;"><i class="fas fa-dot-circle" style="margin-right: 5px;color: var(--bs-green);"></i>{{settings.get('name', name)}}</h3>
-                    {% if settings.get('calibrate', False): %}
-                        <a class="btn btn-success btn-icon-split" role="button" style="margin-right: 10px;">
-                            <span class="text-white-50 icon"><i class="fas fa-redo"></i></span>
-                            <span class="text-white text">Calibrate</span>
+                    {% for i in crossweb.buttons %}
+                        <a class="btn btn-{{i.color}} btn-icon-split" role="button" style="margin-right: 10px; margin-bottom: 5px;" onclick="release_function('{{name}}', '{{i.id}}')">
+                            <span class="text-white-50 icon"><i class="{{i.icon}}"></i></span>
+                            <span class="text-white text">{{i.name}}</span>
                         </a>
-                    {% else %}
-                        <a class="btn btn-secondary btn-icon-split" role="button" style="margin-right: 10px;">
-                            <span class="text-white-50 icon"><i class="fas fa-redo"></i></span>
-                            <span class="text-white text">Calibrate</span>
-                        </a>
-                    {% endif %}
-                    {% if settings.get('warn', False) %}
-                        <a class="btn btn-warning btn-icon-split" role="button" style="margin-right: 10px;">
-                            <span class="text-white-50 icon"><i class="fas fa-exclamation-triangle"></i></span>
-                            <span class="text-white text">See warnings</span>
-                        </a>
-                    {% else %}
-                        <a class="btn btn-secondary btn-icon-split" role="button" style="margin-right: 10px;">
-                            <span class="text-white-50 icon"><i class="fas fa-exclamation-triangle"></i></span>
-                            <span class="text-white text">See warnings</span>
-                        </a>
-                    {% endif %}
-                    <a class="btn btn-secondary btn-icon-split" role="button">
-                        <span class="text-white-50 icon"><i class="fas fa-trash"></i></span>
-                        <span class="text-white text">Delete driver</span>
-                    </a>
+                    {% endfor %}
+                    
                 </div>
-                <div class="container" style="margin-top: 25px; margin-left: 0px;">
+                <div class="container" style="margin-top: 20px; margin-left: 0px;">
                     <div class="row">
                         {% if settings.get("feature", False) %}
                             <div class="col-md-8">
