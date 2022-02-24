@@ -17,4 +17,4 @@ def check_speed():
     io.publish("down", down)
     io.generate_origin()
 
-io.worker(check_speed, 30000)
+io.worker(check_speed, 60000*5)
