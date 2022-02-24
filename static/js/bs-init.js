@@ -19,3 +19,18 @@ document.getElementById("clear").onclick = async function (){
 	document.getElementById("clear-me").innerHTML = ""
 	document.getElementById("notnum").innerHTML = ""
 }
+
+async function release_function(name, func){
+	let response = await fetch("/api/pl/"+name+"/"+func);
+	let json = await response.json();
+	if (response.ok) { // if HTTP-status is 200-299
+	// get the response body (the method explained below)
+		console.log(json)
+	} else {
+		alert("HTTP-Error: " + response.status + "\n" + json["reason"]);
+	}
+}
+
+document.getElementById("reload").onclick = function(){
+	window.location.reload(true)
+}

@@ -17,8 +17,14 @@ def save():
     #io.publish("size", size)
     #io.generate_origin()
 
+def hard_save():
+    database.save()
+    AlertManager.submit(Alert("fas fa-save", "OpenLoop Saver", "Performed Manual Save", "success"))
+
+
 # Examples
 AlertManager.submit(Alert("fas fa-check", "OpenLoop Saver", "OpenLoop is online!", "success"))
 #AlertManager.submit(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", "Something bad happend!", "warning"))
 
 io.worker(save, period)
+crossweb.buttons.append(crossweb.button("Manual Save", id="save", onclick=hard_save, color="primary", icon="fas fa-save"))
