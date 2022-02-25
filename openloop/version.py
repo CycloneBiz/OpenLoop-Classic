@@ -1,3 +1,3 @@
 version = 0.1
-code = "Alpha"
+code = "Beta"
 device = "Self Hosted Device"
