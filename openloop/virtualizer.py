@@ -3,7 +3,7 @@ from datetime import datetime
 
 from openloop.store import backup, restore
 from openloop.alerts import Alert
-from openloop.crossweb import CrossWeb
+from openloop.crossweb import CrossWeb, Element, Container, Row
 
 class Database(dict):
     size = 0
@@ -30,8 +30,21 @@ class IOT:
                 script = f.read()
         else:
             script = data
-        
-        exec(script, {"io": self, "database": superbase, "AlertManager": alerts, "Alert": Alert, "crossweb": self.crossweb}, {})
+        global_vars = {
+            "io": self,
+            "database": superbase,
+            "AlertManager": alerts,
+            "Alert": Alert,
+            "crossweb": self.crossweb,
+            "Element": Element,
+            "Container": Container,
+            "Row": Row
+        }
+        try:
+            exec(compile(script, name, "exec"), global_vars, {})
+        except Exception as e:
+            with open("errors.log", "a") as f:
+                f.write(str(e.args)+"\n")
     
     def publish(self, subbase, object):
         if not subbase in self.database:
@@ -41,7 +54,11 @@ class IOT:
 
     def runtime(self, func, ms):
         while self.running:
-            func()
+            try:
+                func()            
+            except Exception as e:
+                with open("errors.log", "a") as f:
+                    f.write(str(e.args)+"\n")
             time.sleep(ms / 1000)
         
     def worker(self, func, ms):

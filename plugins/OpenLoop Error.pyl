@@ -1,0 +1,18 @@
+global os
+import os
+
+global log
+log = ""
+
+io.settings["name"] = "OpenLoop Error System (EXPERIMENTAL)"
+
+def worker():
+    if os.path.exists("errors.log"):
+        with open("errors.log") as f:
+            log = f.read()
+        io.settings["description"] = log
+    else:
+        io.settings["description"] = "No Errors"
+
+
+io.worker(worker, 6000)

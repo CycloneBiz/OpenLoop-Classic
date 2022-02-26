@@ -29,7 +29,34 @@ class ButtonList(list):
             if i.name == name:
                 return i
 
+class Element:
+    def __init__(self, code, internal = "", classes = []) -> None:
+        self.code = code
+        self.internal = internal
+        self.classes = classes
+
+    def class_ext(self):
+        t = ""
+        for i in self.classes: t += i+" "
+        return t.removesuffix(" ")
+
+class Container(list):
+    def __init__(self, size, title) -> None:
+        self.size = size
+        self.title = title
+        super().__init__()
+
+class Row(list):
+    def __init__(self) -> None:
+        super().__init__()
+
+class CrossPage:
+    def __init__(self) -> None:
+        self.active = False
+
+
 class CrossWeb:
     def __init__(self) -> None:
         self.buttons = ButtonList()
         self.button = Button
+        self.crosspage = CrossPage()
