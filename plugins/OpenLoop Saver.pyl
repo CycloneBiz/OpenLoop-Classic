@@ -19,7 +19,7 @@ def save():
 
 def hard_save():
     database.save()
-    AlertManager.submit(Alert("fas fa-save", "OpenLoop Saver", "Performed Manual Save", "success"))
+    return "Saved database!"
 
 
 # Examples

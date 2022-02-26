@@ -25,7 +25,9 @@ async function release_function(name, func){
 	let json = await response.json();
 	if (response.ok) { // if HTTP-status is 200-299
 	// get the response body (the method explained below)
-		console.log(json)
+		if (json["return"]["data"]!=null){
+			alert(json["return"]["data"])
+		}
 	} else {
 		alert("HTTP-Error: " + response.status + "\n" + json["reason"]);
 	}

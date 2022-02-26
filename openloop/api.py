@@ -98,6 +98,8 @@ class API_Handler:
                     return {"completed": False, "reason": "Functionality Missing!"}, 500
                 else:
                     if button.onclick != False:
-                        button.onclick()
+                        x = button.onclick()
+                    else:
+                        x = None
 
-                    return {"completed": True}
+                    return {"completed": True, "return": {"type": "message", "data": x}}
