@@ -12,4 +12,4 @@
 
 ## Reporting a Vulnerability
 
-Report a vulneralbility by creating a issue and use a example template.
+Report a vulneralbility by creating a issue and use a example template. If the vulneralbility is big please contact Owen (Github Maintaner) at `ow1e3@protonmail.com`.
