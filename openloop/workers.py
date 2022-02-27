@@ -17,12 +17,13 @@ class WorkerHandler:
 
         names = []
         for i in plugins:
+            path = i
             name = i.split('.')[0]
             if name in names:
                 alerts.submit(Alert("fas fa-exclamation-triangle", "OpenLoop Saver", f"The plugin {name} has a duplicate! This will cause major issues to the OpenLoop plugin system.", "danger"))
             names.append(name)
             with open(f"plugins/{i}") as f:
                 past_data = db["plugin_data"].get(name, {})
-                self.plugin_inst.append(IOT(name, db, past_data, f.read(), alerts))
+                self.plugin_inst.append(IOT(name, db, past_data, f.read(), alerts, path))
         print("Completed Plugins...")
             
