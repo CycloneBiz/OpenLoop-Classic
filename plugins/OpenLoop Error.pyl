@@ -16,5 +16,13 @@ def worker():
     else:
         io.settings["description"] = "No Errors"
 
+def purge():
+    if os.path.exists("errors.log"):
+        os.remove("errors.log")
+        return "Removed error log"
+    else:
+        return "No error log to clean"
 
 io.worker(worker, 6000)
+purge = crossweb.button("Clean Errors", icon="fas fa-trash", color="danger", id="purge", onclick=purge)
+crossweb.buttons.append(purge)
