@@ -14,7 +14,7 @@ class Web_Handler:
             navs.append(NavElement("Dashboard", "/", "fas fa-tachometer-alt", False))
 
             for i in workers.plugin_inst:
-                navs.append(NavElement(i.name, f"/driver/{i.name}", i.settings["icon"], False))
+                navs.append(NavElement(i.settings.get("iconame", i.name), f"/driver/{i.name}", i.settings["icon"], False))
 
             navs.append(NavElement("Settings", "/settings", "fa fa-gear", False))
 
@@ -51,6 +51,6 @@ class Web_Handler:
                 if i.name == driver:
                     found = i
             if found != False:
-                return render_template("sensor.html", navbar=get_navs(driver), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb)
+                return render_template("sensor.html", navbar=get_navs(found.settings.get("iconame", i.name)), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb)
             else:
                 return render_template("404.html", navbar=get_navs(""), alerts=alerts), 404

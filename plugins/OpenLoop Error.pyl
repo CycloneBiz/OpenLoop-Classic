@@ -5,6 +5,8 @@ global log
 log = ""
 
 io.settings["name"] = "OpenLoop Error System (EXPERIMENTAL)"
+io.settings["icon"] = "fas fa-exclamation-triangle"
+io.settings["iconame"] = "Error Reporting"
 
 def worker():
     if os.path.exists("errors.log"):
