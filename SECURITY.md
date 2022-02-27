@@ -4,6 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 0.1-Gamma   | :white_check_mark: |
 | 0.1-Beta   | :white_check_mark: |
 | 0.1-Alpha   | :x: |
 | All other past versions   | :x:                |
