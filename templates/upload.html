@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" href="/static/img/OpenLoopBlack.png">
     <link rel="apple-touch-startup-image" href="/static/img/OpenLoopBlack.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{{name}} - OpenLoop</title>
+    <title>Upload Plugins - OpenLoop</title>
     <meta name="" content="">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,7 +29,7 @@
                 </a>
                 <hr class="sidebar-divider my-0" />
                 <ul id="accordionSidebar" class="navbar-nav text-light">
-                    <li class="nav-item"><a class="nav-link" href="../"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="./"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <hr class="sidebar-divider" />
                     <div class="sidebar-heading">
                         <p class="mb-0">INTERFACE</p>
@@ -81,13 +81,6 @@
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <div class="nav-item no-arrow">
-                                    <a class="dropdown-toggle nav-link" href="#" id="reload"> 
-                                        <i class="fas fa-redo-alt fa-fw"></i>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow">
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
                                         {% if alerts.length() > 0 %}
@@ -127,35 +120,11 @@
                             <p class="text-primary m-0 fw-bold">Plugin Information</p>
                         </div>
                         <div class="card-body">
-                            <div id="dataTable" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info"  style="max-height: 60vh;">
-                                <table id="dataTable" class="table my-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Plugin Name</th>
-                                            <th>Location</th>
-                                            <th>Author</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for i in plugins %}
-                                        <tr>
-                                            <td>{{i.name}}</td>
-                                            <td>{{i.path}}</td>
-                                            <td>{{i.settings.get('author', 'Unknown')}}</td>
-                                            {%  if i.working %}
-                                                <td><a class="btn btn-success" role="button" href="plugins/{{i.name}}" style="color: var(--bs-white);">Online</a></td>
-                                            {% else %}
-                                                <td><a class="btn btn-danger" role="button" href="plugins/OpenLoop Error" style="color: var(--bs-white);">Error</a></td>
-                                            {% endif %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                            <form method="POST" enctype="multipart/form-data">
+                                <input class="form-control" type="file" style="margin: 10px;" name="file" required />
+                                <button class="btn btn-primary" type="submit" style="margin-right: 0px;margin-left: 10px;">Submit</button>
+                                <button class="btn btn-danger" type="reset" style="margin-right: 0px;margin-left: 10px;">Reset</button>
+                            </form>
                         </div>
                     </div>
                 </div>

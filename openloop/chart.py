@@ -19,7 +19,11 @@ def translate(data):
 
     data = {
         "labels": data.get("origin"),
-        "datasets": datasets
+        "datasets": datasets,
+        "options": {
+            "responsive": True,
+            "maintainAspectRatio": True
+        }
     }
 
     return json.dumps({

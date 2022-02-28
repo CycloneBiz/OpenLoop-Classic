@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, jsonify, render_template, redirect, url_for, request
 from matplotlib import category
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate
+from werkzeug import secure_filename
 
 class Web_Handler:
     web = Blueprint("web", __name__, "static", "templates")
@@ -42,6 +43,12 @@ class Web_Handler:
         def settings_view():
             return render_template("settings.html", navbar=get_navs(), version=Version(), system=System(), alerts=alerts)
 
+        @self.web.route("/plugins/upload")
+        @auth.login_required
+        def fix_upload_issue():
+            # Fixes browser issue whenever theres a space in a route
+            return redirect(url_for(".upload_plugin"))
+
         @self.web.route("/plugins/<driver>")
         @auth.login_required
         def show_driver_info(driver):
@@ -55,5 +62,19 @@ class Web_Handler:
                 return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
 
         @self.web.route("/plugins")
+        @auth.login_required
         def list_plugin():
             return render_template("plugins.html", navbar=get_navs(), alerts=alerts, plugins=workers.plugin_inst)
+
+        @self.web.route("/upload", methods=["GET", "POST"])
+        @auth.login_required
+        def upload_plugin():
+            if request.method == "GET":
+                return render_template("upload.html", navbar=get_navs(), alerts=alerts)
+            else:
+                req = request.files["file"]
+                if req.filename.endswith(".pyl"):
+                    req.save("plugins/"+secure_filename(req.filename))
+                    return redirect(url_for(".upload_plugin"))
+                else:
+                    return "Only can import .pyl files (Python Logic Script)"

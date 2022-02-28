@@ -2,3 +2,7 @@ database
 *__pycache__
 *.DS_Store
 venv
+cache
+plugins
+!plugins/OpenLoop Error.pyl
+!plugins/OpenLoop Saver.pyl
