@@ -5,14 +5,9 @@ from openloop.version import version, code, device
 
 
 class NavElement:
-    def __init__(self, name, href, icon, active):
+    def __init__(self, name, href):
         self.name = name
         self.href = href
-        self.icon = icon
-        if active:
-            self.active = "active"
-        else:
-            self.active = ""
 
 class Version:
     def __init__(self):

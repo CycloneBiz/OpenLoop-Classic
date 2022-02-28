@@ -17,14 +17,21 @@ class Database(dict):
 class IOT:
     threads = []
     running = True
-    def __init__(self, name, superbase, database = {}, data = None, alerts = []) -> None:
+    def __init__(self, name, superbase, database = {}, data = None, alerts = [], path=None) -> None:
         self.crossweb = CrossWeb()
+        self.working = True
         self.feature = {}
         self.settings = {
             "icon": "fas fa-plug"
         }
         self.name = name
         self.database = database
+
+        if path == None:
+            self.path = name
+        else:
+            self.path = path
+
         if data == None:
             with open(name) as f:
                 script = f.read()
@@ -44,6 +51,7 @@ class IOT:
             exec(compile(script, name, "exec"), global_vars, {})
         except Exception as e:
             with open("errors.log", "a") as f:
+                self.working = False
                 f.write(str(e.args)+"\n")
     
     def publish(self, subbase, object):
@@ -59,6 +67,7 @@ class IOT:
             except Exception as e:
                 with open("errors.log", "a") as f:
                     f.write(str(e.args)+"\n")
+                self.working = False
             time.sleep(ms / 1000)
         
     def worker(self, func, ms):

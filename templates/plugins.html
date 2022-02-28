@@ -38,7 +38,7 @@
                         <div><a class="btn btn-link nav-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1" role="button"><i class="fas fa-cog"></i><span>Settings</span></a>
                             <div id="collapse-1" class="collapse">
                                 <div class="bg-white border rounded py-2 collapse-inner">
-                                    <h6 class="collapse-header">SETTINGS</h6><a class="collapse-item" href="../about">About</a><a class="collapse-item" href="../plugins">Plugins</a>
+                                    <h6 class="collapse-header">SETTINGS</h6><a class="collapse-item" href="./about">About</a><a class="collapse-item" href="./plugins">Plugins</a>
                                 </div>
                             </div>
                         </div>
@@ -121,64 +121,51 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-1" style="padding: 0;padding-bottom: 10px;"><i class="fas fa-dot-circle" style="margin-right: 5px;color: var(--bs-green);"></i>{{settings.get('name', name)}}</h3>
-                    {% for i in crossweb.buttons %}
-                        <a class="btn btn-{{i.color}} btn-icon-split" role="button" style="margin-right: 10px; margin-bottom: 5px;" onclick="release_function('{{name}}', '{{i.id}}')">
-                            <span class="text-white-50 icon"><i class="{{i.icon}}"></i></span>
-                            <span class="text-white text">{{i.name}}</span>
-                        </a>
-                    {% endfor %}
-                    
-                </div>
-                <div class="container" style="margin-top: 20px; margin-left: 0px;">
-                    <div class="row">
-                        {% if settings.get("feature", False) %}
-                            <div class="col-md-8">
-                                <div class="card shadow mb-4" style="padding-bottom: 50px;">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h6 class="text-primary fw-bold m-0">Chart&nbsp;</h6>
-                                        <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                            <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
-                                                <p class="text-center dropdown-header">Chart&nbsp;</p><a class="dropdown-item" href="#">Change database</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="chart-area"><canvas data-bss-chart="{{chart}}"></canvas></div>
-                                    </div>
-                                </div>
+                    <h3 class="text-dark mb-4">Plugins</h3>
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Plugin Information</p>
+                        </div>
+                        <div class="card-body">
+                            <div id="dataTable" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info"  style="max-height: 60vh;">
+                                <table id="dataTable" class="table my-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Plugin Name</th>
+                                            <th>Location</th>
+                                            <th>Author</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in plugins %}
+                                        <tr>
+                                            <td>{{i.name}}</td>
+                                            <td>{{i.path}}</td>
+                                            <td>{{i.settings.get('author', 'Unknown')}}</td>
+                                            {%  if i.working %}
+                                                <td><a class="btn btn-success" role="button" href="plugins/{{i.name}}" style="color: var(--bs-white);">Online</a></td>
+                                            {% else %}
+                                                <td><a class="btn btn-danger" role="button" href="plugins/OpenLoop Error" style="color: var(--bs-white);">Error</a></td>
+                                            {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr></tr>
+                                    </tfoot>
+                                </table>
                             </div>
-                            <div class="col-md-4">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Description</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="m-0">{{settings.get('description', 'No Description')}}&nbsp;</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="col-md-8">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="text-primary m-0 fw-bold">Description</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="m-0">{{settings.get('description', 'No Description')}}&nbsp;</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
+        </div>
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Made with Flask as part of <a href="https://github.com/CycloneBiz">Cyclone</a></span></div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Made with Flask as part of <a href="https://github.com/CycloneBiz">Cyclone</a></span></div>
-                </div>
-            </footer>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+        </footer>
+        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="/static/js/chart.min.js"></script>

@@ -5,6 +5,9 @@ from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
 
+app.config["UPLOAD_FOLDER"] = "cache"
+app.config["MAX_CONTENT-PATH"] = 128000000 
+
 auth = HTTPBasicAuth()
 
 db = Database()

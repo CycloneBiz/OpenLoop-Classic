@@ -1,6 +1,8 @@
-from flask import Blueprint, jsonify, render_template
+from flask import Blueprint, jsonify, render_template, redirect, url_for, request
+from matplotlib import category
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate
+from werkzeug import secure_filename
 
 class Web_Handler:
     web = Blueprint("web", __name__, "static", "templates")
@@ -8,19 +10,17 @@ class Web_Handler:
     def __init__(self, db, workers, auth, alerts) -> None:
         self.db = db
 
-        def get_navs(highlight):
-            navs = []
-
-            navs.append(NavElement("Dashboard", "/", "fas fa-tachometer-alt", False))
+        def get_navs():
+            navs = {"OPENLOOP INTERNAL": []}
 
             for i in workers.plugin_inst:
-                navs.append(NavElement(i.settings.get("iconame", i.name), f"/driver/{i.name}", i.settings["icon"], False))
+                selection = i.settings.get("category", "PLUGINS")
 
-            navs.append(NavElement("Settings", "/settings", "fa fa-gear", False))
+                if not selection in navs:
+                    navs[selection] = []
 
-            for i in navs:
-                if i.name == highlight:
-                    i.active = "active"
+                navs[selection].append(NavElement(i.settings.get("iconame", i.name), f"/plugins/{i.name}"))
+
 
             return navs
         
@@ -31,19 +31,25 @@ class Web_Handler:
 
             return render_template(
                 "index.html",
-                navbar=get_navs("Dashboard"),
+                navbar=get_navs(),
                 drivers=len(workers.plugin_inst),
                 energy="NaN",
                 storage_used=f"{db.size/store_settings['divide']}{store_settings['unit']}",
                 alerts=alerts
             )
 
-        @self.web.route("/settings")
+        @self.web.route("/about")
         @auth.login_required
         def settings_view():
-            return render_template("settings.html", navbar=get_navs("Settings"), version=Version(), system=System(), alerts=alerts)
+            return render_template("settings.html", navbar=get_navs(), version=Version(), system=System(), alerts=alerts)
 
-        @self.web.route("/driver/<driver>")
+        @self.web.route("/plugins/upload")
+        @auth.login_required
+        def fix_upload_issue():
+            # Fixes browser issue whenever theres a space in a route
+            return redirect(url_for(".upload_plugin"))
+
+        @self.web.route("/plugins/<driver>")
         @auth.login_required
         def show_driver_info(driver):
             found = False
@@ -51,6 +57,24 @@ class Web_Handler:
                 if i.name == driver:
                     found = i
             if found != False:
-                return render_template("sensor.html", navbar=get_navs(found.settings.get("iconame", i.name)), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb)
+                return render_template("sensor.html", navbar=get_navs(), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb)
             else:
-                return render_template("404.html", navbar=get_navs(""), alerts=alerts), 404
+                return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
+
+        @self.web.route("/plugins")
+        @auth.login_required
+        def list_plugin():
+            return render_template("plugins.html", navbar=get_navs(), alerts=alerts, plugins=workers.plugin_inst)
+
+        @self.web.route("/upload", methods=["GET", "POST"])
+        @auth.login_required
+        def upload_plugin():
+            if request.method == "GET":
+                return render_template("upload.html", navbar=get_navs(), alerts=alerts)
+            else:
+                req = request.files["file"]
+                if req.filename.endswith(".pyl"):
+                    req.save("plugins/"+secure_filename(req.filename))
+                    return redirect(url_for(".upload_plugin"))
+                else:
+                    return "Only can import .pyl files (Python Logic Script)"
