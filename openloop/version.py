@@ -1,3 +1,3 @@
 version = 0.1
-code = "Gamma"
+code = "Delta"
 device = "Self Hosted Device"
