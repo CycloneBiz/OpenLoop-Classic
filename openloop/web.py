@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, request
-from matplotlib import category
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate
 from werkzeug import secure_filename
+import os
 
 class Web_Handler:
     web = Blueprint("web", __name__, "static", "templates")
@@ -58,6 +58,23 @@ class Web_Handler:
                     found = i
             if found != False:
                 return render_template("sensor.html", navbar=get_navs(), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb, objected=found)
+            else:
+                return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
+
+        @self.web.route("/plugins/<driver>/delete")
+        @auth.login_required
+        def delete_driver(driver):
+            found = False
+            for i in workers.plugin_inst:
+                if i.name == driver:
+                    found = i
+            if found != False and found.name not in ["OpenLoop Saver", "OpenLoop Error"]:
+                path = "plugins/"+found.path
+                if os.path.exists(path):
+                    os.remove(path)
+                    return redirect(url_for(".list_plugin"))
+                else:
+                    return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
             else:
                 return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
 

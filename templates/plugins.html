@@ -143,17 +143,19 @@
                                             <td>{{i.name}}</td>
                                             <td>{{i.path}}</td>
                                             <td>{{i.settings.get('author', 'Unknown')}}</td>
-                                            {%  if i.working %}
-                                                <td><a class="btn btn-success" role="button" href="plugins/{{i.name}}" style="color: var(--bs-white);">Online</a></td>
-                                            {% else %}
-                                                <td><a class="btn btn-danger" role="button" href="plugins/OpenLoop Error" style="color: var(--bs-white);">Error</a></td>
-                                            {% endif %}
+                                            <td>
+                                                {%  if i.working %}
+                                                    <a class="btn btn-success" role="button" href="plugins/{{i.name}}" style="color: var(--bs-white);">Online</a>
+                                                {% else %}
+                                                    <a class="btn btn-danger" role="button" href="plugins/OpenLoop Error" style="color: var(--bs-white);">Error</a>
+                                                {% endif %}
+                                                {% if not i.name in ['OpenLoop Saver', 'OpenLoop Error'] %}
+                                                    <a class="btn btn-primary" role="button" href="plugins/{{i.name}}/delete" style="color: var(--bs-white);"><i class="fas fa-trash"></i></a>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
                                 </table>
                             </div>
                         </div>
