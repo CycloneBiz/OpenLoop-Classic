@@ -121,7 +121,12 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-1" style="padding: 0;padding-bottom: 10px;"><i class="fas fa-dot-circle" style="margin-right: 5px;color: var(--bs-green);"></i>{{settings.get('name', name)}}</h3>
+                    <h3 class="text-dark mb-1" style="padding: 0;padding-bottom: 10px;">
+                        {% if objected.working %}
+                            <i class="fas fa-dot-circle" style="margin-right: 5px;color: var(--bs-green);"></i>{{settings.get('name', name)}}</h3>
+                        {% else %}
+                            <i class="fas fa-dot-circle" style="margin-right: 5px;color: var(--bs-red);"></i>{{settings.get('name', name)}}</h3>
+                        {% endif %}
                     {% for i in crossweb.buttons %}
                         <a class="btn btn-{{i.color}} btn-icon-split" role="button" style="margin-right: 10px; margin-bottom: 5px;" onclick="release_function('{{name}}', '{{i.id}}')">
                             <span class="text-white-50 icon"><i class="{{i.icon}}"></i></span>
@@ -145,6 +150,29 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-area"><canvas data-bss-chart="{{chart}}"></canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="text-primary m-0 fw-bold">Description</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="m-0">{{settings.get('description', 'No Description')}}&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% elif not objected.working %}
+                            <div class="col-md-8">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="text-primary m-0 fw-bold">PyLogic Issue</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3>Error detected!</h3>
+                                        <p class="m-0">Please check the <a href="OpenLoop Error">error log</a> to learn more.</p>
+                                        <p>If this is a OpenLoop issue please report it <a href="https://github.com/CycloneBiz/OpenLoop/issues">here. Error logs coming soon.</a></p>
                                     </div>
                                 </div>
                             </div>
