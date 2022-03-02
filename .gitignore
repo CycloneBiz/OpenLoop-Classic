@@ -4,5 +4,6 @@ database
 venv
 cache
 plugins
+errors.log
 !plugins/OpenLoop Error.pyl
 !plugins/OpenLoop Saver.pyl

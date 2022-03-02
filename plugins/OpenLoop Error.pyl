@@ -7,6 +7,7 @@ log = ""
 io.settings["name"] = "OpenLoop Error System (EXPERIMENTAL)"
 io.settings["iconame"] = "Error Reporting"
 io.settings["category"] = "OPENLOOP INTERNAL"
+io.settings["author"] = "OpenLoop"
 
 def worker():
     if os.path.exists("errors.log"):
