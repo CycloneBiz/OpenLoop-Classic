@@ -6,7 +6,7 @@ import os
 class API_Handler:
     api = Blueprint("api", __name__, "static", "templates")
 
-    def __init__(self, db, workers, auth, alerts) -> None:
+    def __init__(self, db, workers, auth, alerts, crossflow) -> None:
         self.db = db
 
         @self.api.route("/")
@@ -79,7 +79,7 @@ class API_Handler:
             alerts.reset()
             return {"completed": True}
 
-        @self.api.route("/pl/<plugin>/<func>")
+        @self.api.route("/pl/<plugin>/<func>", methods=["GET", "POST"])
         def register_function(plugin, func):
             chosen = None
             for i in workers.plugin_inst:
@@ -88,6 +88,8 @@ class API_Handler:
             if chosen == None:
                 return {"completed": False, "reason": "Plugin name does not exist or is Invalid"}, 500
             else:
+                
+                crossflow.cross_prompt.set_data(func, request.values.get("send", None))
 
                 button = None
                 for i in chosen.crossweb.buttons:
@@ -101,5 +103,8 @@ class API_Handler:
                         x = button.onclick()
                     else:
                         x = None
+
+                    if "\prompt:" in x:
+                        return {"completed": True, "return": {"type": "prompt", "data": x.replace("\prompt:", "")}}
 
                     return {"completed": True, "return": {"type": "message", "data": x}}

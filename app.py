@@ -13,6 +13,10 @@ auth = HTTPBasicAuth()
 db = Database()
 db.restore()
 
+# Data dealer
+from openloop.crossflow import CrossFlow
+crossflow = CrossFlow()
+
 # Auth Handler
 from openloop.auth import Auth_Handler
 auth_handle = Auth_Handler(db, auth)
@@ -24,7 +28,7 @@ alerts = AlertManager()
 # Enable Plugins and Workers
 from openloop.workers import WorkerHandler
 print(" * Turning on Plugin Support... ")
-worker_handle = WorkerHandler(db, alerts)
+worker_handle = WorkerHandler(db, alerts, crossflow)
 
 # Setup Save Handler
 from openloop.saver import WorkSaveHandler
@@ -39,7 +43,7 @@ print(" * Website System Imported...")
 
 # Import API and share database
 from openloop.api import API_Handler
-api_handler = API_Handler(db, worker_handle, auth, alerts)
+api_handler = API_Handler(db, worker_handle, auth, alerts, crossflow)
 app.register_blueprint(api_handler.api, url_prefix="/api")
 print(" * API Imported...")
 

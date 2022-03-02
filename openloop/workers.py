@@ -3,7 +3,7 @@ from openloop.virtualizer import IOT
 from openloop.alerts import Alert
 
 class WorkerHandler:
-    def __init__(self, db, alerts) -> None:
+    def __init__(self, db, alerts, crossflow) -> None:
         print("Scanning...")
         plugins = os.listdir("plugins")
 
@@ -24,6 +24,6 @@ class WorkerHandler:
             names.append(name)
             with open(f"plugins/{i}") as f:
                 past_data = db["plugin_data"].get(name, {})
-                self.plugin_inst.append(IOT(name, db, past_data, f.read(), alerts, path))
+                self.plugin_inst.append(IOT(name, db, crossflow, past_data, f.read(), alerts, path))
         print("Completed Plugins...")
             

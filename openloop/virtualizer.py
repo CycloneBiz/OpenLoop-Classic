@@ -17,8 +17,9 @@ class Database(dict):
 class IOT:
     threads = []
     running = True
-    def __init__(self, name, superbase, database = {}, data = None, alerts = [], path=None) -> None:
+    def __init__(self, name, superbase, crossflow, database = {}, data = None, alerts = [], path=None) -> None:
         self.crossweb = CrossWeb()
+        self.crossflow = None
         self.working = True
         self.feature = {}
         self.settings = {
@@ -44,7 +45,8 @@ class IOT:
             "crossweb": self.crossweb,
             "Element": Element,
             "Container": Container,
-            "Row": Row
+            "Row": Row,
+            "CrossPrompt": crossflow.cross_prompt
         }
         try:
             exec(compile(script, name, "exec"), global_vars, {})
