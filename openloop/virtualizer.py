@@ -22,7 +22,6 @@ class IOT:
         self.working = True
         self.feature = {}
         self.settings = {
-            "icon": "fas fa-plug"
         }
         self.name = name
         self.database = database
