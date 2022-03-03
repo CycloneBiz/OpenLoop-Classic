@@ -1,5 +1,3 @@
-from werkzeug.security import generate_password_hash
-
 default_config = {
     "properties": {
         "name": "OpenLoop IOT",
@@ -13,8 +11,9 @@ default_config = {
             "divide": 1000
         },
         "users": {
-            "admin": generate_password_hash("admin")
-        }
+            "admin": None
+        },
+        "startup": False
     },
     "plugin_data": {}
 }

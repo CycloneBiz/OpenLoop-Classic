@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, request
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate
+from werkzeug.security import generate_password_hash
 from werkzeug import secure_filename
 import os
 
@@ -28,7 +29,6 @@ class Web_Handler:
         @auth.login_required
         def index():
             store_settings = db["properties"]["storage"]
-
             return render_template(
                 "index.html",
                 navbar=get_navs(),
@@ -37,6 +37,21 @@ class Web_Handler:
                 storage_used=f"{db.size/store_settings['divide']}{store_settings['unit']}",
                 alerts=alerts
             )
+
+        @self.web.route("/start", methods=["GET", "POST"])
+        def startup():
+            if db["properties"].get("startup", False) == True:
+                return redirect(url_for(".index"))
+            else:
+                if request.method == "GET" or request.form.get("password", None)==None:
+                    return render_template("starting.html")
+                elif request.form.get("password", None) == "":
+                    return render_template("starting.html", notice="Your password cannot be nothing!")
+                else:
+                    passw = generate_password_hash(request.form["password"])
+                    db["properties"]["users"]["admin"] = passw
+                    db["properties"]["startup"] = False
+                    return redirect(url_for(".index"))
 
         @self.web.route("/about")
         @auth.login_required
