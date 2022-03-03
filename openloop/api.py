@@ -88,8 +88,11 @@ class API_Handler:
             if chosen == None:
                 return {"completed": False, "reason": "Plugin name does not exist or is Invalid"}, 500
             else:
+                value = request.values.get("send", None)
+                if value == "null":
+                    value = None
                 
-                crossflow.cross_prompt.set_data(func, request.values.get("send", None))
+                crossflow.cross_prompt.set_data(func, value)
 
                 button = None
                 for i in chosen.crossweb.buttons:
@@ -104,7 +107,7 @@ class API_Handler:
                     else:
                         x = None
 
-                    if "\prompt:" in x:
+                    if "\prompt:" in str(x):
                         return {"completed": True, "return": {"type": "prompt", "data": x.replace("\prompt:", "")}}
 
                     return {"completed": True, "return": {"type": "message", "data": x}}
