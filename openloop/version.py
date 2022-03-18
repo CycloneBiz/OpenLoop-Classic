@@ -1,3 +1,3 @@
-version = 0.1
-code = "Delta"
+version = 0.2
+code = "Whiterock"
 device = "Self Hosted Device"
