@@ -113,17 +113,59 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <div class="col-md-8">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="text-primary m-0 fw-bold">About</h6>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">About</h6>
+                                </div>
+                                <div class="card-body" style>
+                                    <h1>OpenLoop Version {{version.version}} <a class="text-primary">{{version.code}}</a></h1>
+                                    <p>Running on a {{version.device}}<br>System Network Name: {{system.hostname}}<br>LAN/WLAN: {{system.ip}}<br></p>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h1>OpenLoop Version {{version.version}} {{version.code}}</h1>
-                                <button class="btn btn-success" type="button" style="color: var(--bs-white);margin-right: 10px;margin-bottom: 10px;">CLI Server Online</button>
-                                <button class="btn btn-success" type="button" style="color: var(--bs-white);margin-bottom: 10px;">OpenLoop Scheduler Online</button>
-                                <p>Running on a {{version.device}}<br>System Network Name: {{system.hostname}}<br>LAN/WLAN: {{system.ip}}<br></p>
+                        </div>
+                        <div class="col-md-4" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%;">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Special Thanks</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="m-0">
+                                        Special Thanks to Evan Taylor for the original idea of OpenLoop. 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Software Used</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Flask</li>
+                                        <li>Requests</li>
+                                        <li>FlaskHTTPAuth</li>
+                                        <li>Bootstrap</li>
+                                        <li>Bootstrap Studio</li>
+                                        <li>ChartJS</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Developers</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Owen Shaule</li>
+                                        <li>Evan Taylor</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

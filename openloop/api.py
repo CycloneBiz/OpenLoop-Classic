@@ -13,65 +13,6 @@ class API_Handler:
         @auth.login_required
         def give_version():
             return {"version": 0.01}
-
-        @self.api.route("/setpass")
-        @auth.login_required
-        def set_password():
-            if request.headers.get("password", False)==False:
-                return {"completed": False, "reason": "No Password Headers"}, 500
-            else:
-                password = request.headers.get("password")
-                db["properties"]["users"]["admin"] = generate_password_hash(password)
-                return {"completed": True}
-
-        @self.api.route("/setpass/<user>")
-        @auth.login_required
-        def set_password_specific(user : str):
-            if request.headers.get("password", False)==False:
-                return {"completed": False, "reason": "No Password Headers"}, 500
-            else:
-                password = request.headers.get("password")
-                db["properties"]["users"][user] = generate_password_hash(password)
-                return {"completed": True}, 201
-
-        @self.api.route("/drivers")
-        @auth.login_required
-        def list_drivers():
-            prod = []
-            for i in workers.plugin_inst:
-                prod.append(i.name)
-            return jsonify(prod)
-
-        @self.api.route("/drivers/delete/<driver>")
-        @auth.login_required
-        def delete_driver(driver):
-            chosen = False
-
-            for i in workers.plugin_inst:
-                if i.name == driver:
-                    chosen = i
-
-            if chosen == False:
-                return {"completed": False, "reason": "That Plugin does not exist"}, 500
-            elif chosen.name == "OpenLoop Saver":
-                return {"completed": False, "reason": "You cannot delete a internal Plugin"}, 500
-            else:
-                os.remove(f"plugin/{chosen.name}.pyl")
-                return {"completed": True}
-
-        @self.api.route("/drivers/upload/<name>", methods=["POST"])
-        @auth.login_required
-        def upload_driver(name):
-            url = request.headers.get("url", None)
-            data = requests.get(url)
-            if url==None:
-                return {"completed": False, "reason": "Url not found in headers"}, 500
-            if data.ok:
-                with open(f"plugins/{name}.pyl", "w") as f:
-                    f.write(data.text)
-                return {"completed": True}
-            else:
-                return {"completed": False, "reason": "Url not accesable"}, 500
         
         @self.api.route("/clear_notifications")
         @auth.login_required

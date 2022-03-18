@@ -17,10 +17,11 @@ class Web_Handler:
             for i in workers.plugin_inst:
                 selection = i.settings.get("category", "PLUGINS")
 
-                if not selection in navs:
-                    navs[selection] = []
+                if i.settings.get("hidden", False) == False:
+                    if not selection in navs:
+                        navs[selection] = []
 
-                navs[selection].append(NavElement(i.settings.get("iconame", i.name), f"/plugins/{i.name}"))
+                    navs[selection].append(NavElement(i.settings.get("iconame", i.name), f"/plugins/{i.name}"))
 
 
             return navs
