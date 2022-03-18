@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Alert:
-    def __init__(self, icon, name, description, color) -> None:
+    def __init__(self, icon, name, description, color, plugin) -> None:
         self.icon = icon
         self.name = name
         self.description = description
@@ -10,6 +10,7 @@ class Alert:
         self.date = str(datetime.now().date())
         self.combo = f"{self.date} {self.hour}:{self.minute}"
         self.color = color
+        self.plugin = plugin
     def __repr__(self) -> str:
         return f"Alert(\"{self.icon}\", \"{self.name}\"))"
 

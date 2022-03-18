@@ -46,10 +46,12 @@ class IOT:
             "Element": Element,
             "Container": Container,
             "Row": Row,
-            "CrossPrompt": crossflow.cross_prompt
+            "CrossPrompt": crossflow.cross_prompt,
+            "MemoryFlow": crossflow.memory,
+            "DashPanel": crossflow.dash
         }
         try:
-            exec(compile(script, name, "exec"), global_vars, {})
+            exec(compile(script, path, "exec"), global_vars, {})
         except Exception as e:
             with open("errors.log", "a") as f:
                 self.working = False

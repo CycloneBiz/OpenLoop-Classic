@@ -8,7 +8,7 @@ import os
 class Web_Handler:
     web = Blueprint("web", __name__, "static", "templates")
 
-    def __init__(self, db, workers, auth, alerts) -> None:
+    def __init__(self, db, workers, auth, alerts, crossflow) -> None:
         self.db = db
 
         def get_navs():
@@ -33,7 +33,7 @@ class Web_Handler:
                 "index.html",
                 navbar=get_navs(),
                 drivers=len(workers.plugin_inst),
-                energy="NaN",
+                dash=crossflow.dash.dash_buttons,
                 storage_used=f"{db.size/store_settings['divide']}{store_settings['unit']}",
                 alerts=alerts
             )
@@ -110,3 +110,7 @@ class Web_Handler:
                     return redirect(url_for(".upload_plugin"))
                 else:
                     return "Only can import .pyl files (Python Logic Script)"
+
+        @self.web.errorhandler(404)
+        def error_404():
+            return render_template("404.html", alerts=alerts)

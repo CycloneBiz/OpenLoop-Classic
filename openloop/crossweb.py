@@ -54,7 +54,6 @@ class CrossPage:
     def __init__(self) -> None:
         self.active = False
 
-
 class CrossWeb:
     def __init__(self) -> None:
         self.buttons = ButtonList()
