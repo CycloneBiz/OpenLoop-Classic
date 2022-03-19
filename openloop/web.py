@@ -10,6 +10,8 @@ class Web_Handler:
 
     def __init__(self, db, workers, auth, alerts, crossflow) -> None:
         self.db = db
+        self.alerts = alerts
+        self.auth = auth
 
         def get_navs():
             navs = {"OPENLOOP INTERNAL": []}
@@ -75,7 +77,7 @@ class Web_Handler:
             if found != False:
                 return render_template("sensor.html", navbar=get_navs(), settings=found.settings, name=found.name, chart=chart_translate(found.extract_features()), alerts=alerts, crossweb=found.crossweb, objected=found)
             else:
-                return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
+                return render_template("404.html", navbar=get_navs(), alerts=alerts, code=404, text="The plugin you requested does not exist"), 404
 
         @self.web.route("/plugins/<driver>/delete")
         @auth.login_required
@@ -90,9 +92,9 @@ class Web_Handler:
                     os.remove(path)
                     return redirect(url_for(".list_plugin"))
                 else:
-                    return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
+                    return render_template("404.html", navbar=get_navs(), alerts=alerts, code=404, text="Looks like that plugin has already been removed, restart to see changes"), 404
             else:
-                return render_template("404.html", navbar=get_navs(), alerts=alerts), 404
+                return render_template("404.html", navbar=get_navs(), alerts=alerts, code=404), 404
 
         @self.web.route("/plugins")
         @auth.login_required
@@ -111,7 +113,19 @@ class Web_Handler:
                     return redirect(url_for(".upload_plugin"))
                 else:
                     return "Only can import .pyl files (Python Logic Script)"
+    
+    def assign_errors(self, app):
+        @app.errorhandler(404)
+        @self.auth.login_required
+        def not_found(e):
+            return render_template("404.html", alerts=self.alerts, code=404, text="Um... That dosent exist"), 404
 
-        @self.web.errorhandler(404)
-        def error_404():
-            return render_template("404.html", alerts=alerts)
+        @app.errorhandler(500)
+        @self.auth.login_required
+        def not_found(e):
+            return render_template("404.html", alerts=[], code=500, text="Looks like you venturd too far!"), 500
+
+        def not_found():
+            return render_template("404.html", alerts=[], code=401, text="Bad Guy or Sad User?"), 401
+
+        self.auth.error_handler(not_found)

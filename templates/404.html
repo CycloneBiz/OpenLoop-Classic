@@ -83,7 +83,7 @@
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <div class="nav-item dropdown no-arrow">
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-                                        {% if alerts.length() > 0 %}
+                                        {% if not alerts==[] and alerts.length() > 0 %}
                                         <span class="badge bg-danger badge-counter" id="notnum">{{alerts.length()}}</span>
                                         {% endif %}
                                         <i class="fas fa-bell fa-fw"></i>
@@ -115,11 +115,11 @@
                 </nav>
                 <div class="container-fluid">
                     <div class="text-center mt-5">
-                        <div class="error mx-auto" data-text="404">
-                            <p class="m-0">404</p>
+                        <div class="error mx-auto" data-text="{{code}}">
+                            <p class="m-0">{{code}}</p>
                         </div>
-                        <p class="text-dark mb-5 lead">Page Not Found</p>
-                        <p class="text-black-50 mb-0">It looks like you found a glitch in the matrix...</p><a href="/">← Back to Dashboard</a>
+                        <p class="text-dark mb-5 lead">{{text}}</p>
+                        <p class="text-black-50 mb-0">It looks like you found a glitch in the matrix...</p><a href="../">← Back to Dashboard</a>
                     </div>
                 </div>
             </div>

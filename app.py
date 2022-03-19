@@ -42,6 +42,7 @@ save_handler = WorkSaveHandler(worker_handle, db["properties"]["autosave"]["work
 
 # Import Web Interface System
 web_handler = Web_Handler(db, worker_handle, auth, alerts, crossflow)
+web_handler.assign_errors(app)
 app.register_blueprint(web_handler.web, url_prefix="/")
 print(" * Website System Imported...")
 
