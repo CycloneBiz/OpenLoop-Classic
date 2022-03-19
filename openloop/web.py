@@ -13,20 +13,23 @@ class Web_Handler:
         self.alerts = alerts
         self.auth = auth
 
-        def get_navs():
-            navs = {"OPENLOOP INTERNAL": []}
+        def get_navs(hidden=False):
+            if not hidden:
+                navs = {"OPENLOOP INTERNAL": []}
+                for i in workers.plugin_inst:
+                    selection = i.settings.get("category", "PLUGINS")
 
-            for i in workers.plugin_inst:
-                selection = i.settings.get("category", "PLUGINS")
+                    if i.settings.get("hidden", False) == False:
+                        if not selection in navs:
+                            navs[selection] = []
 
-                if i.settings.get("hidden", False) == False:
-                    if not selection in navs:
-                        navs[selection] = []
-
-                    navs[selection].append(NavElement(i.settings.get("iconame", i.name), f"/plugins/{i.name}"))
-
+                        navs[selection].append(NavElement(i.settings.get("iconame", i.name), f"/plugins/{i.name}"))
+            else:
+                navs = {"PLUGINS HIDDEN": []}
 
             return navs
+
+        self.get_navs = get_navs
         
         @self.web.route("/")
         @auth.login_required
@@ -128,9 +131,9 @@ class Web_Handler:
         @app.errorhandler(500)
         @self.auth.login_required
         def not_found(e):
-            return render_template("404.html", alerts=[], code=500, text="Looks like you venturd too far!"), 500
+            return render_template("404.html", alerts=[], code=500, text="Looks like you venturd too far!", navbar=self.get_navs(True)), 500
 
         def not_found():
-            return render_template("404.html", alerts=[], code=401, text="Bad Guy or Sad User?", start=True), 401
+            return render_template("404.html", alerts=[], code=401, text="Bad Guy or Sad User?", start=True, navbar=self.get_navs(True)), 401
 
         self.auth.error_handler(not_found)
