@@ -41,9 +41,14 @@ class Web_Handler:
                 alerts=alerts
             )
 
+        @self.web.route("/trylogin/here")
+        @auth.login_required
+        def try_login():
+            return redirect(url_for(".index"))
+
         @self.web.route("/start", methods=["GET", "POST"])
         def startup():
-            if db["properties"].get("startup", False) == True:
+            if db["properties"]["startup"] == True:
                 return redirect(url_for(".index"))
             else:
                 if request.method == "GET" or request.form.get("password", None)==None:
@@ -53,8 +58,8 @@ class Web_Handler:
                 else:
                     passw = generate_password_hash(request.form["password"])
                     db["properties"]["users"]["admin"] = passw
-                    db["properties"]["startup"] = False
-                    return redirect(url_for(".index"))
+                    db["properties"]["startup"] = True
+                    return redirect(url_for(".try_login"))
 
         @self.web.route("/about")
         @auth.login_required
@@ -126,6 +131,6 @@ class Web_Handler:
             return render_template("404.html", alerts=[], code=500, text="Looks like you venturd too far!"), 500
 
         def not_found():
-            return render_template("404.html", alerts=[], code=401, text="Bad Guy or Sad User?"), 401
+            return render_template("404.html", alerts=[], code=401, text="Bad Guy or Sad User?", start=True), 401
 
         self.auth.error_handler(not_found)

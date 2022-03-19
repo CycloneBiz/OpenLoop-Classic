@@ -119,7 +119,11 @@
                             <p class="m-0">{{code}}</p>
                         </div>
                         <p class="text-dark mb-5 lead">{{text}}</p>
+                        {% if start %}
+                        <p class="text-black-50 mb-0">Have you setup a account yet?</p><a href="../start">← Try signing up here</a>
+                        {% else %}
                         <p class="text-black-50 mb-0">It looks like you found a glitch in the matrix...</p><a href="../">← Back to Dashboard</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
