@@ -1,3 +1,7 @@
+"""
+Controls PyLogic and general database class
+"""
+
 import threading, time
 from datetime import datetime
 

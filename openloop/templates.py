@@ -1,3 +1,7 @@
+"""
+Templates for OpenLoop Objects
+"""
+
 default_config = {
     "properties": {
         "name": "OpenLoop IOT",

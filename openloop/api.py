@@ -1,3 +1,7 @@
+"""
+Provides backend to frontend services to OpenLoop
+"""
+
 from flask import Blueprint, jsonify, request
 from werkzeug.security import generate_password_hash
 import requests

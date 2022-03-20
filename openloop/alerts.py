@@ -1,3 +1,7 @@
+"""
+Controls Alert Classes in OpenLoop
+"""
+
 from datetime import datetime
 
 class Alert:

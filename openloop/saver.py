@@ -1,3 +1,7 @@
+"""
+Autosaves to dictionary
+"""
+
 from time import sleep
 import threading
 

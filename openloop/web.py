@@ -1,3 +1,7 @@
+"""
+Serves frontend and partial backend to frontend services to OpenLoop
+"""
+
 from flask import Blueprint, jsonify, render_template, redirect, url_for, request
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate

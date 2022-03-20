@@ -1,3 +1,8 @@
+"""
+Assigns workers to classes
+(This is not threaded because unless its a big database it should not be bad and I dont want complexity)
+"""
+
 import os
 from openloop.virtualizer import IOT
 from openloop.alerts import Alert
