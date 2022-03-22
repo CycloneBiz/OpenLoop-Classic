@@ -1,3 +1,7 @@
+"""
+Authentication checker
+"""
+
 from werkzeug.security import check_password_hash
 
 
@@ -7,6 +11,6 @@ class Auth_Handler:
         @self.auth.verify_password
         def verify_password(username, password):
             if username in db["properties"]["users"] and \
-                    check_password_hash(db["properties"]["users"].get(username), password):
+                    check_password_hash(str(db["properties"]["users"].get(username)), password):
                 return username
             

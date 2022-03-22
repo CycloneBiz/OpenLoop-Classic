@@ -99,7 +99,7 @@
                                         <h6 class="dropdown-header">alerts center</h6>
                                         <div id="clear-me">
                                             {% for i in alerts %}
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <a class="dropdown-item d-flex align-items-center" href="/plugins/{{i.plugin}}">
                                                 <div class="me-3">
                                                     <div class="bg-{{i.color}} icon-circle"><i class="{{i.icon}} text-white"></i></div>
                                                 </div>
@@ -172,7 +172,7 @@
                                     <div class="card-body">
                                         <h3>Error detected!</h3>
                                         <p class="m-0">Please check the <a href="OpenLoop Error">error log</a> to learn more.</p>
-                                        <p>If this is a OpenLoop issue please report it <a href="https://github.com/CycloneBiz/OpenLoop/issues">here. Error logs coming soon.</a></p>
+                                        <p>If this is a OpenLoop issue please report it <a href="https://github.com/CycloneBiz/OpenLoop/issues">here.</a></p>
                                     </div>
                                 </div>
                             </div>

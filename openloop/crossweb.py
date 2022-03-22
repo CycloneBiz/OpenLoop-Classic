@@ -1,3 +1,7 @@
+"""
+A bunch of experimental (unused) classes, also provides the main class for sensor page buttons
+"""
+
 class Button:
     def __init__(self, name, color = "secondary", icon="fas fa-infinity", onclick=None, id=None):
         self.onclick = onclick
@@ -53,7 +57,6 @@ class Row(list):
 class CrossPage:
     def __init__(self) -> None:
         self.active = False
-
 
 class CrossWeb:
     def __init__(self) -> None:

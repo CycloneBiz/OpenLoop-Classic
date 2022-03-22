@@ -1,3 +1,7 @@
+"""
+Controls PyLogic and general database class
+"""
+
 import threading, time
 from datetime import datetime
 
@@ -17,12 +21,12 @@ class Database(dict):
 class IOT:
     threads = []
     running = True
-    def __init__(self, name, superbase, database = {}, data = None, alerts = [], path=None) -> None:
+    def __init__(self, name, superbase, crossflow, database = {}, data = None, alerts = [], path=None) -> None:
         self.crossweb = CrossWeb()
+        self.crossflow = None
         self.working = True
         self.feature = {}
         self.settings = {
-            "icon": "fas fa-plug"
         }
         self.name = name
         self.database = database
@@ -45,10 +49,13 @@ class IOT:
             "crossweb": self.crossweb,
             "Element": Element,
             "Container": Container,
-            "Row": Row
+            "Row": Row,
+            "CrossPrompt": crossflow.cross_prompt,
+            "MemoryFlow": crossflow.memory,
+            "DashPanel": crossflow.dash
         }
         try:
-            exec(compile(script, name, "exec"), global_vars, {})
+            exec(compile(script, path, "exec"), global_vars, {})
         except Exception as e:
             with open("errors.log", "a") as f:
                 self.working = False

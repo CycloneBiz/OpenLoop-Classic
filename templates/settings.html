@@ -92,7 +92,7 @@
                                         <h6 class="dropdown-header">alerts center</h6>
                                         <div id="clear-me">
                                             {% for i in alerts %}
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <a class="dropdown-item d-flex align-items-center" href="/plugins/{{i.plugin}}">
                                                 <div class="me-3">
                                                     <div class="bg-{{i.color}} icon-circle"><i class="{{i.icon}} text-white"></i></div>
                                                 </div>
@@ -113,11 +113,62 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="container-fluid">
-                    <h1>OpenLoop Version {{version.version}} {{version.code}}</h1>
-                    <button class="btn btn-success" type="button" style="color: var(--bs-white);margin-right: 10px;">CLI Server Online</button>
-                    <button class="btn btn-success" type="button" style="color: var(--bs-white);">OpenLoop Scheduler Online</button>
-                    <p>Running on a {{version.device}}<br>System Network Name: {{system.hostname}}<br>LAN/WLAN: {{system.ip}}<br></p>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">About</h6>
+                                </div>
+                                <div class="card-body" style>
+                                    <h1>OpenLoop Version {{version.version}} <a class="text-primary">{{version.code}}</a></h1>
+                                    <p>Running on a {{version.device}}<br>System Network Name: {{system.hostname}}<br>LAN/WLAN: {{system.ip}}<br></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%;">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Special Thanks</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="m-0">
+                                        Special Thanks to Evan Taylor for the original idea of OpenLoop. 
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Software Used</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Flask</li>
+                                        <li>Requests</li>
+                                        <li>FlaskHTTPAuth</li>
+                                        <li>Bootstrap</li>
+                                        <li>Bootstrap Studio</li>
+                                        <li>ChartJS</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin-bottom: 10px;">
+                            <div class="card shadow mb-4" style="height: 100%">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary m-0 fw-bold">Developers</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Owen Shaule</li>
+                                        <li>Evan Taylor</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="bg-white sticky-footer">

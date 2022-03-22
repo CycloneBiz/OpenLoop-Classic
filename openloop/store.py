@@ -1,3 +1,7 @@
+"""
+Database storing drivers (easy to add future database options)
+"""
+
 import json, os
 
 from datetime import datetime
@@ -9,9 +13,9 @@ if not os.path.exists("database"):
 
 def backup(db):
     date = datetime.now().date()
-    with open(f"database/{date}.json", "w") as f:
+    with open(f"database/current.json", "w") as f:
         json.dump(db, f)
-    size = os.stat(f"database/{date}.json").st_size
+    size = os.stat(f"database/current.json").st_size
     return size
 
 

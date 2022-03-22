@@ -1,4 +1,6 @@
-# Classes for Statistics and Management of web.py
+"""
+GUI Classes for Web
+"""
 
 import socket, requests
 from openloop.version import version, code, device

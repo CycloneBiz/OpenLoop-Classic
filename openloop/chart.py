@@ -1,3 +1,7 @@
+"""
+ChartJS Packager
+"""
+
 import json
 import numpy as np
 

@@ -1,4 +1,6 @@
-from werkzeug.security import generate_password_hash
+"""
+Templates for OpenLoop Objects
+"""
 
 default_config = {
     "properties": {
@@ -13,8 +15,9 @@ default_config = {
             "divide": 1000
         },
         "users": {
-            "admin": generate_password_hash("admin")
-        }
+            "admin": None
+        },
+        "startup": False
     },
     "plugin_data": {}
 }

@@ -92,7 +92,7 @@
                                         <h6 class="dropdown-header">alerts center</h6>
                                         <div id="clear-me">
                                             {% for i in alerts %}
-                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <a class="dropdown-item d-flex align-items-center" href="/plugins/{{i.plugin}}">
                                                 <div class="me-3">
                                                     <div class="bg-{{i.color}} icon-circle"><i class="{{i.icon}} text-white"></i></div>
                                                 </div>
@@ -121,6 +121,7 @@
                         </div>
                         <div class="card-body">
                             <form method="POST" enctype="multipart/form-data">
+                                <p style="margin-left: 10px;">Remember to <b>always</b> trust the plugins you are installing, as they use the Python Runtime Enviroment and have direct access to your machine.</p>
                                 <input class="form-control" type="file" style="margin: 10px;" name="file" required />
                                 <button class="btn btn-primary" type="submit" style="margin-right: 0px;margin-left: 10px;">Submit</button>
                                 <button class="btn btn-danger" type="reset" style="margin-right: 0px;margin-left: 10px;">Reset</button>
