@@ -4,6 +4,7 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 0.2-WhiteRock   | :white_check_mark: |
 | 0.1-Delta   | :white_check_mark: |
 | 0.1-Gamma   | :white_check_mark: |
 | 0.1-Beta   | :x: |
