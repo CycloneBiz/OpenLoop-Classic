@@ -6,7 +6,7 @@ from flask import Blueprint, jsonify, render_template, redirect, url_for, reques
 from openloop.gui import NavElement, Version, System
 from openloop.chart import translate as chart_translate
 from werkzeug.security import generate_password_hash
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import os
 
 class Web_Handler:
