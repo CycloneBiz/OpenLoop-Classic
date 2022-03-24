@@ -27,7 +27,7 @@ class IOT:
         self.working = True
         self.feature = {}
         self.settings = {
-            "path": self.name
+            "path": name
         }
         self.name = name
         self.database = database
